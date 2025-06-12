@@ -1,81 +1,84 @@
 # FuelSOS
 1. Nom du projet : FuelSOS
+📅 3-Week Agile Backlog (Web App Version)
+✅ Week 1: Auth, Setup, and Base Infrastructure
+Backend
+ Setup Express project and MongoDB connection
 
-2. Côté Prestataire
-Connexion
+ Create User model (with role: "user" or "provider")
 
-Notification de demande
+ JWT Authentication: register & login APIs
 
-Accepter / Refuser
+ Auth middleware for protected routes
 
-Navigation vers l’utilisateur
+ Setup .env and CORS
 
-Marquer la livraison comme faite
+Frontend
+ Create React app with Vite + Tailwind CSS
 
-Recevoir le paiement (statut "payé")
+ Setup React Router DOM
 
-3. Côté Admin Web
-Voir liste des utilisateurs / prestataires
+ Pages: Login, Register
 
-Valider prestataires
+ Axios service and auth API integration
 
-Consulter les demandes en cours
+ Auth Context for login persistence
 
-Supprimer comptes / gérer plaintes
+✅ Week 2: Fuel Request & Provider Management
+Backend
+ Create FuelRequest model
 
-4. Stack Technologique
-| Composant        | Tech choisie                  |
-| ---------------- | ----------------------------- |
-| Mobile App       | React Native                  |
-| Backend API      | Node.js + Express             |
-| Base de données  | MongoDB (MongoDB Atlas)       |
-| Authentification | Firebase Auth                 |
-| Géolocalisation  | Google Maps API               |
-| Paiement         | Stripe (test mode)            |
-| Temps réel       | Socket.IO                     |
-| Admin Panel      | React + TailwindCSS ou ShadCN |
-| Hébergement      | Vercel / Render / Heroku      |
+ API:
 
-5. Contraintes
-Déploiement fonctionnel avant fin de la 3e semaine
-Optimisation mobile uniquement (pas de tablette/web utilisateur)
-Sécurité minimale pour le MVP
-Interface simple, claire et fonctionnelle
+POST /fuel/request – user creates a request
 
- Backlog Agile (Planification 3 Semaines)
- Semaine 1 – Mise en place technique & Authentification
-🧩 Backlog Sprint 1
+GET /fuel/nearby – provider sees nearby requests
 
-| Tâche                             | Description                       | Durée estimée |
-| --------------------------------- | --------------------------------- | ------------- |
-| Init projet React Native          | Setup app mobile                  | 0.5 j         |
-| Setup backend Node.js + MongoDB   | Serveur Express + Mongoose        | 1 j           |
-| Authentification Firebase         | Utilisateur & prestataire         | 1 j           |
-| Création des modèles MongoDB      | Utilisateur, prestataire, demande | 1 j           |
-| Intégration Google Maps           | Affichage de la position          | 1 j           |
-| UI simple écran connexion + carte | React Native UI de base           | 1 j           |
+POST /fuel/accept/:id – provider accepts request
 
-Semaine 2 – Demande de carburant & Gestion prestataire
-🧩 Backlog Sprint 2
+GET /fuel/status/:id – check status
 
-| Tâche                              | Description                          | Durée estimée |
-| ---------------------------------- | ------------------------------------ | ------------- |
-| Fonction "Demander Carburant"      | Bouton + envoi des données           | 0.5 j         |
-| Localiser prestataires à proximité | Backend + Maps                       | 1 j           |
-| Notifications prestataires         | Socket.IO ou polling                 | 1 j           |
-| Accepter / refuser une demande     | Interface prestataire                | 0.5 j         |
-| Suivi en temps réel                | Prestataire → utilisateur (tracking) | 1 j           |
-| Ecran de confirmation + évaluation | Interface utilisateur fin mission    | 0.5 j         |
-| Design simplifié + navigation      | UI mobile fluide                     | 0.5 j         |
+ Add location to requests (GeoJSON)
 
-Semaine 3 – Paiement, admin et finalisation
-🧩 Backlog Sprint 3
+Frontend
+ User dashboard: map + form to request fuel
 
-| Tâche                           | Description                       | Durée estimée |
-| ------------------------------- | --------------------------------- | ------------- |
-| Intégrer Stripe (test)          | Paiement utilisateur → plateforme | 1 j           |
-| Historique des demandes         | Côté utilisateur et prestataire   | 0.5 j         |
-| Interface Admin (React)         | Liste des comptes + validation    | 1 j           |
-| Gestion des demandes dans admin | Affichage + suppression           | 0.5 j         |
-| Test end-to-end complet         | Mobile, backend, admin            | 1 j           |
-| Corrections + Déploiement       | Finalisation + docs               | 1 j           |
+ Use browser Geolocation API
+
+ Provider dashboard: see nearby requests
+
+ Accept and track request status
+
+ Display request history for user and provider
+
+✅ Week 3: Polish, Payment, and Admin
+Backend
+ Add Stripe/Razorpay integration (optional)
+
+ History routes for users/providers
+
+ Admin route: list all requests, users
+
+ Improve error handling & validation
+
+Frontend
+ Payment screen (mock or real)
+
+ Add admin dashboard (if role = admin)
+
+ Style enhancements & mobile responsive design
+
+ Testing: unit/API testing with Jest/Postman
+
+ Prepare for deployment (Vercel + Render)
+
+🧠 Optional Tools
+| Tool               | Use             |
+| ------------------ | --------------- |
+| MongoDB Atlas      | Cloud DB        |
+| Google Maps JS API | Map & distance  |
+| Stripe/Razorpay    | Payment         |
+| Postman            | API testing     |
+| Vercel/Netlify     | Deploy frontend |
+| Render/Fly.io      | Deploy backend  |
+
