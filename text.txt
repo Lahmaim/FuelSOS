@@ -1,0 +1,2 @@
+MOTPASSE=nO1S3CbGshCDzrKk
+MONGOURL=mongodb+srv://anaslahmaim55:nO1S3CbGshCDzrKk@cluster0.8xgptsr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
