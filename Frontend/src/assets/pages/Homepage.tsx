@@ -10,11 +10,11 @@ const HomePage: React.FC = () => {
       <header className="flex justify-between items-center mb-12">
         <h1 className="text-2xl font-bold text-red-500">FuelSOS</h1>
         <nav className="space-x-6 text-sm">
-          <a href="/HomePage" className="hover:text-red-400">Home</a>
+          <a href="/" className="hover:text-red-400">Home</a>
           <a href="#" className="hover:text-red-400">How it Works</a>
           <a href="#" className="hover:text-red-400">Request Fuel</a>
           <a href="#" className="hover:text-red-400">Contact</a>
-          <a href="#" className="hover:text-red-400">Log in</a>
+          <a href="/login" className="hover:text-red-400">Log in</a>
         </nav>
       </header>
 

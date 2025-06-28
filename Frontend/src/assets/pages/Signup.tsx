@@ -1,170 +1,128 @@
-"use client"
-
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form"
+import { Card, CardContent } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { toast } from "sonner"
+import { Eye, EyeOff } from "lucide-react"
+import axios from "axios"
 
-const formSchema = z
-  .object({
-    fullName: z.string().min(2, "Full name is required"),
-    email: z.string().email("Invalid email"),
-    phone: z.string().min(8, "Phone is required"),
-    password: z.string().min(6, "Password too short"),
-    confirmPassword: z.string().min(6, "Please confirm your password"),
-    role: z.enum(["client", "provider"], {
-      required_error: "Please choose a role",
-    }),
+const SignupPage: React.FC = () => {
+  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    role: "",
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  })
+  const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-export default function SignupForm() {
-  const [selectedRole, setSelectedRole] = useState<"client" | "provider" | null>(null)
+  const handleSignup = async () => {
+    setError("")
+    const { name, email, phone, password, confirmPassword, role } = form
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-      role: undefined,
-    },
-  })
+    if (!name || !email || !phone || !password || !confirmPassword || !role) {
+      setError("Please fill out all fields.")
+      return
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.")
+      return
+    }
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form Submitted:", values)
-    // Submit to your backend API here
+    try {
+      const res = await axios.post("http://localhost:5000/api/register", {
+        name, email, phone, password, role,
+      })
+      localStorage.setItem("token", res.data.token)
+      localStorage.setItem("userId", res.data.user._id)
+      toast.success("Account created successfully!")
+      navigate("/dashboard")
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Signup failed.")
+    }
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col justify-center items-center px-4">
-      <div className="max-w-md w-full space-y-6">
-        <h1 className="text-4xl font-bold text-white">Sign Up</h1>
-        <p className="text-muted-foreground text-sm">
-          Create an account by filling out the form below.
-        </p>
-
-        <div className="flex gap-4 mb-4">
-          <Button
-            variant={selectedRole === "client" ? "default" : "outline"}
-            className="xx-full"
-            onClick={() => {
-              form.setValue("role", "client")
-              setSelectedRole("client")
-            }}
-            type="button"
-          >
-            Client
+    <div className="min-h-screen bg-black text-white flex items-center justify-center px-4">
+      <Card className="w-full max-w-md bg-neutral-900 border border-neutral-800">
+        <CardContent className="space-y-4 p-6">
+          <h2 className="text-xl font-bold mb-2 text-white">Sign Up</h2>
+          <Input
+            className="text-white"
+            placeholder="Full Name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+          <Input
+            className="text-white"
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+          />
+          <Input
+            className="text-white"
+            placeholder="Phone"
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          />
+          <Select onValueChange={(value) => setForm({ ...form, role: value })}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="client">Client</SelectItem>
+              <SelectItem value="provider">Provider</SelectItem>
+            </SelectContent>
+          </Select>
+          <div className="relative">
+            <Input
+              className="text-white"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-2.5 text-neutral-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          <div className="relative">
+            <Input
+              className="text-white"
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              value={form.confirmPassword}
+              onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-2.5 text-neutral-500"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <Button onClick={handleSignup} className="w-full bg-red-600 hover:bg-red-500">
+            Create Account
           </Button>
-          <Button
-            variant={selectedRole === "provider" ? "default" : "outline"}
-            className="x-full"
-            onClick={() => {
-              form.setValue("role", "provider")
-              setSelectedRole("provider")
-            }}
-            type="button"
-          >
-            Provider
-          </Button>
-        </div>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Full Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your full name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="you@example.com" type="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Phone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+212..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full">
-              Sign Up
-            </Button>
-          </form>
-        </Form>
-
-        <p className="text-center text-muted-foreground text-sm">
-          Already have an account?{" "}
-          <a href="/login" className="underline font-semibold text-white">
-            Log in
-          </a>
-        </p>
-      </div>
+          <p className="text-sm text-gray-400 text-center">
+            Already have an account? <a href="/login" className="underline text-white">Log in</a>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   )
 }
+
+export default SignupPage

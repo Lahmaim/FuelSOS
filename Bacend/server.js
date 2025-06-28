@@ -28,6 +28,8 @@ import cors from "cors";
 
 import router from "./src/routes/auth.js";
 import requestRouter from "./src/routes/requests.js"
+import usersRouter from "./src/routes/users.js"
+import statsRouter from "./src/routes/statsRoutes.js"
 
 
 dotenv.config();
@@ -39,6 +41,8 @@ app.use(express.json());
 app.use(cors());
 app.use("/api", router);
 app.use ("/api/request",requestRouter)
+app.use ("/api/users",usersRouter)
+app.use ("/api/stats",statsRouter)
 
 const PORT = process.env.PORT 
 

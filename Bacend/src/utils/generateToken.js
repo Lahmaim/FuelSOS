@@ -4,8 +4,8 @@ import dotenv from "dotenv"
 dotenv.config()
 
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.KEY_JWT, {
+const generateToken = (id, role) => {
+  return jwt.sign({ id, role }, process.env.KEY_JWT, {
     expiresIn: "7d",
   });
 };
