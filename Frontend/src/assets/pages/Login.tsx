@@ -11,7 +11,7 @@ import { useAuth } from "../context/AuthContext"; // your custom hook
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuth(); // ✅ Use your custom hook inside component
+  const { setUser, user } = useAuth(); // ✅ Use your custom hook inside component
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -32,8 +32,8 @@ const LoginPage: React.FC = () => {
       const decoded = jwtDecode(token);
       const user = {
         id: decoded.id,
-        name: decoded.name,
-        email: decoded.email,
+        // name: decoded.name,
+        // email: decoded.email,
         role: decoded.role,
       };
 

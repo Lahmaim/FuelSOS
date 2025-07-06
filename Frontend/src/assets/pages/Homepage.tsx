@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Fuel, Truck, Clock, ShieldCheck, Zap } from "lucide-react";
+import { MapPin, Fuel, Truck, Clock, ShieldCheck, Zap,CreditCard } from "lucide-react";
 import bg from "/public/bg.png"
+
+// import { MapPin, Truck, CreditCard, Fuel, Banknote } from "lucide-react";
 const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 p-6">
@@ -23,54 +25,72 @@ const HomePage: React.FC = () => {
         <div>
           <h2 className="text-4xl font-bold mb-4">Stuck Without Fuel? We've Got You.</h2>
           <p className="text-lg text-neutral-300 mb-6">
-            Request emergency fuel delivery in minutes – anytime, anywhere.
+            Request emergency fuel delivery in minutes anytime anywhere.
           </p>
           <Button className="bg-red-600 hover:bg-red-500 text-white text-lg px-6 py-2 rounded-xl">
             Request Fuel Now
           </Button>
         </div>
-        <div style={{backgroundImage:`url(${bg})`}} className="bg-center bg-cover bg-neutral-900  h-75 rounded-xl flex items-center justify-center">
+        <div style={{backgroundImage:`url(${bg})`}} className="bg-center bg-cover bg-neutral-900  h-90 rounded-xl flex items-center justify-center">
           {/* <MapPin className="text-red-500" size={80} /> */}
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="mb-16">
-        <h3 className=" text-2xl font-semibold mb-6">How It Works</h3>
-        <div className="text-red-500 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-neutral-900">
-            <CardContent className="p-6 text-center">
-              <MapPin className="text-red-500 mx-auto mb-4" size={40} />
-              <h4 className="text-red-500 font-semibold text-lg mb-2">Locate Yourself</h4>
-              <p className="text-sm text-neutral-400">
-                We use your GPS location or you can manually enter your location.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="bg-neutral-900">
-            <CardContent className="p-6 text-center">
-              <Fuel className="text-red-500 mx-auto mb-4" size={40} />
-              <h4 className="text-red-500 font-semibold text-lg mb-2">Choose Fuel</h4>
-              <p className="text-sm text-neutral-400">
-                Select the type of fuel you need for your vehicle.
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="bg-neutral-900">
-            <CardContent className="p-6 text-center">
-              <Truck className="text-red-500 mx-auto mb-4" size={40} />
-              <h4 className="text-red-500 font-semibold text-lg mb-2">Get Delivered</h4>
-              <p className="text-sm text-neutral-400">
-                Our delivery team will bring fuel directly to your location.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+     {/* How It Works */}
+<section className="mb-16">
+  {/* <h3 className=" text-2xl  font-semibold mb-6">How It Works</h3> */}
+  <h3 className="text-2xl font-semibold mb-6 text-center">How It Works</h3>
+
+  <div className="text-red-500 grid grid-cols-1 md:grid-cols-4 gap-6">
+    {/* Locate Yourself */}
+    <Card className="bg-neutral-900">
+      <CardContent className="p-6 text-center">
+        <MapPin className="text-red-500 mx-auto mb-4" size={40} />
+        <h4 className="text-red-500 font-semibold text-lg mb-2">Locate Yourself</h4>
+        <p className="text-sm text-neutral-400">
+          We use your GPS location or you can manually enter your location.
+        </p>
+      </CardContent>
+    </Card>
+
+    {/* Choose Fuel */}
+    <Card className="bg-neutral-900">
+      <CardContent className="p-6 text-center">
+        <Fuel className="text-red-500 mx-auto mb-4" size={40} />
+        <h4 className="text-red-500 font-semibold text-lg mb-2">Choose Fuel</h4>
+        <p className="text-sm text-neutral-400">
+          Select the type of fuel you need for your vehicle.
+        </p>
+      </CardContent>
+    </Card>
+
+    {/* Get Delivered */}
+    <Card className="bg-neutral-900">
+      <CardContent className="p-6 text-center">
+        <Truck className="text-red-500 mx-auto mb-4" size={40} />
+        <h4 className="text-red-500 font-semibold text-lg mb-2">Get Delivered</h4>
+        <p className="text-sm text-neutral-400">
+          Our delivery team will bring fuel directly to your location.
+        </p>
+      </CardContent>
+    </Card>
+
+    {/* Payment Mode */}
+    <Card className="bg-neutral-900">
+      <CardContent className="p-6 text-center">
+        <CreditCard className="text-red-500 mx-auto mb-4" size={40} />
+        <h4 className="text-red-500 font-semibold text-lg mb-2">Choose Payment</h4>
+        <p className="text-sm text-neutral-400">
+          Pay online or with cash upon delivery  whatever suits you best.
+        </p>
+      </CardContent>
+    </Card>
+  </div>
+</section>
 
       {/* Features Section */}
       <section className="mb-16">
-        <h3 className=" text-2xl font-semibold mb-6">Features</h3>
+        <h3 className=" text-2xl font-semibold mb-6 text-center">Features</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="bg-neutral-900">
             <CardContent className="p-6 text-center">

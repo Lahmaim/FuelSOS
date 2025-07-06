@@ -31,7 +31,7 @@ export const login = async (req, res) => {
     // Remove sensitive info before sending
     const { password: _, ...userData } = user.toObject();
 
-    res.json({ token: generateToken(user._id, user.role), user: userData });
+    res.json({ token: generateToken(user._id, user.role, user.name), user: userData });
   } catch {
     res.status(500).json({ message: "Login failed" });
   }

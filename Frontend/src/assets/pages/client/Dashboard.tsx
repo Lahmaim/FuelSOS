@@ -1,32 +1,24 @@
-// // pages/client/Dashboard.tsx
-// import { Button } from "@/components/ui/button";
-// import { Card, CardContent } from "@/components/ui/card";
-// import { Link } from "react-router-dom";
 
-// export default function ClientDashboard() {
+// // App.tsx or Routes.tsx
+// import { Routes, Route } from "react-router-dom";
+// import ClientDashboard from "./pages/ClientDashboard"; // layout
+// import FuelRequest from "./pages/client/FuelRequest";
+// import ProfilePage from "./pages/ProfilePage";
+// import HistoryPage from "./pages/client/HistoryPage";
+// import SettingsPage from "./pages/client/SettingsPage";
+// // Optional dashboard home
+// import DashboardHome from "./pages/client/DashboardHome";
+
+// function AppRoutes() {
 //   return (
-//     <div className="grid gap-6 p-4">
-//       <h2 className="text-2xl font-bold text-white">Welcome, Client!</h2>
-//       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//         <Card>
-//           <CardContent>
-//             <h3 className="text-xl font-semibold mb-2">Request Fuel</h3>
-//             <p>You currently have no active fuel request.</p>
-//             <Link to="/request-fuel">
-//               <Button className="mt-4">Request Fuel</Button>
-//             </Link>
-//           </CardContent>
-//         </Card>
-
-//         <Card>
-//           <CardContent>
-//             <h3 className="text-xl font-semibold mb-2">Your Latest Request</h3>
-//             <p>Status: Pending</p>
-//             <p>Type: Diesel</p>
-//             <p>Location: Map coming soon</p>
-//           </CardContent>
-//         </Card>
-//       </div>
-//     </div>
+//     <Routes>
+//       <Route path="/client" element={<ClientDashboard />}>
+//         <Route index element={<DashboardHome />} />
+//         <Route path="request" element={<FuelRequest />} />
+//         <Route path="profile" element={<ProfilePage />} />
+//         <Route path="history" element={<HistoryPage />} />
+//         <Route path="settings" element={<SettingsPage />} />
+//       </Route>
+//     </Routes>
 //   );
 // }

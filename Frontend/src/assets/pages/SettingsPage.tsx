@@ -32,14 +32,14 @@ export default function SettingsPage() {
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-black text-black dark:text-white">
       {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-gray-900 border-r p-6">
+      {/* <aside className="w-64 bg-white dark:bg-gray-900 border-r p-6">
         <h2 className="text-2xl font-bold mb-10">🚨 FuelSOS</h2>
         <nav className="space-y-2">
           <a href="/dashboard">🏠 Dashboard</a>
           <a href="/profile">👤 Profile</a>
           <a href="/settings" className="font-bold text-blue-600">⚙️ Settings</a>
         </nav>
-      </aside>
+      </aside> */}
 
       {/* Main content */}
       <main className="flex-1 p-10">

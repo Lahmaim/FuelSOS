@@ -1,11 +1,16 @@
-import { Sidebar } from ".././components/Sidebar"
-import { StatCard } from ".././components/StatCard"
-import { RequestTable } from ".././components/RequestTable"
-import { Bell } from "lucide-react"
+import { Sidebar } from "../../components/Sidebar.tsx"
+// import { StatCard } from "../../components/StatCard.tsx"
+import { RequestTable } from "../../components/RequestTable.tsx"
+// import { Bell } from "lucide-react"
 import { Route, Routes } from "react-router-dom"
-import Users from '../pages/admin/Dashboard.tsx';
-import AllProviders from "./admin/AllProvides.tsx"
+import Users from './Dashboard.tsx';
+import AllProviders from "./AllProvides.tsx"
+import { useContext } from "react"
+import { AuthContext } from "../../context/AuthContext.tsx"
+import ProfileHeader from "@/assets/components/ProfileHeader.tsx"
 export default function Dashboard() {
+
+   const { userInfo } = useContext(AuthContext);
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
@@ -14,8 +19,8 @@ export default function Dashboard() {
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-semibold">Dashboard</h2>
           <div className="flex items-center gap-2 font-medium">
-            Anas Lahmaim
-            <Bell className="w-5 h-5" />
+          {/* {userInfo?.name} */}
+          <ProfileHeader/>
           </div>
         </div>
 
