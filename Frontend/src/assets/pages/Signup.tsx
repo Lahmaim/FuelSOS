@@ -42,7 +42,9 @@ const SignupPage: React.FC = () => {
       localStorage.setItem("token", res.data.token)
       localStorage.setItem("userId", res.data.user._id)
       toast.success("Account created successfully!")
-      navigate("/dashboard")
+      navigate("/login")
+      console.log(res);
+      
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Signup failed.")
     }
@@ -59,7 +61,7 @@ const SignupPage: React.FC = () => {
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
-          <Input
+          <Input type="email"
             className="text-white"
             placeholder="Email"
             value={form.email}

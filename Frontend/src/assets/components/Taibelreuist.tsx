@@ -3,12 +3,13 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import {  useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 // import { MessageCircle } from "lucide-react";
 
-export default function ArtisanDashboard() {
+export default function RequestTable() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All");
@@ -16,6 +17,9 @@ export default function ArtisanDashboard() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
+
+const {user}=useContext(AuthContext)
+
   const requestsPerPage = 10;
 
 
@@ -67,7 +71,7 @@ const handleUpdateStatus = async (id, status) => {
   try {
     await axios.put(
       `http://localhost:5000/api/request/${id}`,
-      { status },
+      { status,provider:user?.id },
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -174,7 +178,7 @@ const handleUpdateStatus = async (id, status) => {
             <thead className="bg-gray-50 text-gray-600 uppercase text-xs font-semibold">
               <tr>
                 <th className="px-6 py-3 text-left">Client</th>
-                <th className="px-6 py-3 text-left">Nameprovidr</th>
+                <th className="px-6 py-3 text-left">provider</th>
                 <th className="px-6 py-3 text-left">Status</th>
                 <th className="px-6 py-3 text-left">Imatricule</th>
                 <th className="px-6 py-3 text-left">Fuel Type</th>
@@ -216,7 +220,7 @@ const handleUpdateStatus = async (id, status) => {
                       {req.provider}
                     </span>
                   </td> */}
-                  <td className="px-6 py-4 text-gray-800">{req.provider || "N/A"}</td>
+                  <td className="px-6 py-4 text-gray-800">{req.provider?.name || "N/A"}</td>
 
                   <td className="px-6 py-4">
                     <span className={getStatusColor(req.status)}>
@@ -284,27 +288,27 @@ const handleUpdateStatus = async (id, status) => {
                    )}
                  </td> */}
                  <td className="px-6 py-4">
-  {req.status === "pending" && (
+  {req.status === "Pending" && (
     <div className="flex gap-2">
       <button
         className="px-3 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-xs"
-        onClick={() => handleUpdateStatus(req._id, "approved")}
+        onClick={() => handleUpdateStatus(req._id, "Accepted")}
       >
         Accept
       </button>
       <button
         className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-xs"
-        onClick={() => handleUpdateStatus(req._id, "rejected")}
+        onClick={() => handleUpdateStatus(req._id, "Rejected")}
       >
         Reject
       </button>
     </div>
   )}
 
-  {req.status === "approved" && (
+  {req.status === "Approved" && (
     <button
       className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-xs"
-      onClick={() => handleUpdateStatus(req._id, "completed")}
+      onClick={() => handleUpdateStatus(req._id, "Completed")}
     >
       Complete
     </button>

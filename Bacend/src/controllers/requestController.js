@@ -74,7 +74,12 @@ export const updateStatus = async (req, res) => {
     //   return res.status(403).json({ message: "Forbidden" });
     // }
 
+    // request.status = req.body.status;
+
     request.status = req.body.status;
+    request.provider = req.body.provider;
+
+
     await request.save();
 
     res.status(200).json(request);

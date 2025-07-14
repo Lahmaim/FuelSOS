@@ -106,6 +106,7 @@ import History from "./assets/pages/provider/History.tsx"; // Create this
 import { Toaster } from "sonner";
 
 import RequestFuelModal from "./assets/components/RequestFuelModal.tsx";
+import RequestTable from "./assets/components/Taibelreuist.tsx";
 
 function App() {
   return (
@@ -121,7 +122,8 @@ function App() {
 
         {/* Provider layout with nested routes */}
         <Route path="/provider/*" element={<ProviderDashboard />}>
-          <Route index element={<Deliveries />} /> {/* Default */}
+          {/* <Route index element={<Deliveries />} />  */}
+          <Route index element={<RequestTable />} /> {/* Default */}
           {/* <Route path="deliveries" element={<Deliveries />} /> */}
           <Route path="deliveries" element={<Deliveries />} />
           {/* <Route path="history" element={<MyDeliveries />} /> */}

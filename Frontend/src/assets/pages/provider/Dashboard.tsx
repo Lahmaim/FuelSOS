@@ -508,7 +508,7 @@ export default function ProviderDashboard() {
         {/* Nested Route Content (like Deliveries.tsx) */}
         <div className="mt-16">
           <Outlet />
-          <Taibelreuist/>
+          {/* <Taibelreuist/> */}
         </div>
       </main>
     </div>
