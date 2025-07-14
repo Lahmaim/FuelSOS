@@ -161,15 +161,15 @@ export default function MapSelector({
             alert(" Location access denied.");
           }
 
-          const fallback: [number, number] = [33.5899, -7.6039]; // Casablanca
-          setInitialPosition(fallback);
-          onLocationSelect(fallback);
+          // const fallback: [number, number] = [33.5899, -7.6039]; // Casablanca
+          // setInitialPosition(fallback);
+          // onLocationSelect(fallback);
         }
       );
     } else {
-      const fallback: [number, number] = [33.5899, -7.6039]; // Fallback for unsupported browsers
-      setInitialPosition(fallback);
-      onLocationSelect(fallback);
+      // const fallback: [number, number] = [33.5899, -7.6039]; // Fallback for unsupported browsers
+      // setInitialPosition(fallback);
+      // onLocationSelect(fallback);
     }
   }, []);
 

@@ -348,6 +348,7 @@ export default function FuelRequest() {
     try {
       const token = localStorage.getItem("token");
       await axios.post("http://localhost:5000/api/requests", payload, {
+
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Fuel request submitted!");

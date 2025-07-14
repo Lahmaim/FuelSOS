@@ -7,7 +7,7 @@ import {
   updateStatus,
 } from "../controllers/requestController.js";
 
-// import auth from "../middleware/auth.js";
+import auth from "../middleware/auth.js";
 // import restrictTo from "../middleware/roles.js";
 
 // const router = express.Router();
@@ -31,6 +31,8 @@ router.get("/ping", (req, res) => {
 // Your “my” route
 router.get("/", getAllRequests);
 
+router.post('/',auth,createRequest)
+router.put('/:id',auth,updateStatus)
+// router.put("/request/:id", authMiddleware, updateStatus);
 
-router.post('/',createRequest)
 export default router;

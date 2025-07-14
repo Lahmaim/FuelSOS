@@ -402,6 +402,7 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { Button } from "@/components/ui/button"
+import Taibelreuist from "../../components/Taibelreuist"
 import {
   Home,
   MapPin,
@@ -428,7 +429,7 @@ export default function ProviderDashboard() {
       <aside className="w-64 p-6 bg-gray-100 dark:bg-[#1f2937] flex flex-col justify-between">
         <div>
           {/* Logo */}
-          <h2 className="text-2xl font-bold mb-6 text-red-600">FuelSOS</h2>
+          <h2 className="text-2xl font-bold mb-6 text-black-600">FuelSOS</h2>
 
           {/* Navigation */}
           <nav className="space-y-3">
@@ -507,6 +508,7 @@ export default function ProviderDashboard() {
         {/* Nested Route Content (like Deliveries.tsx) */}
         <div className="mt-16">
           <Outlet />
+          <Taibelreuist/>
         </div>
       </main>
     </div>

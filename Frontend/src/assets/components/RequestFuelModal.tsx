@@ -205,14 +205,264 @@
 
 
 
-import { useState } from "react";
+// import { useState } from "react";
+// import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Button } from "@/components/ui/button";
+// import { toast } from "sonner";
+// import axios from "axios";
+// import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+
+// function LocationPicker({ setLatLng }: { setLatLng: (pos: { lat: number; lng: number }) => void }) {
+//   useMapEvents({
+//     click(e) {
+//       setLatLng({ lat: e.latlng.lat, lng: e.latlng.lng });
+//     },
+//   });
+//   return null;
+// }
+
+// export default function RequestFuelModal() {
+//   const [form, setForm] = useState({
+//     name: "",
+//     phone: "",
+//     imatricule: "",
+//     fuelType: "Diesel",
+//     quantity: 10,
+//     note: "",
+//     time: new Date().toISOString(),
+//   });
+//   const [location, setLocation] = useState({ lat: 33.5899, lng: -7.6039 }); // Default Casablanca
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//     setForm({ ...form, [e.target.name]: e.target.value });
+//   };
+
+//   const handleSubmit = async () => {
+//     try {
+//       await axios.post("http://localhost:5000/api/request", { ...form, location });
+//       toast.success("Fuel request sent!");
+//     } catch (err) {
+//       console.error(err);
+//       toast.error("Failed to send request.");
+//     }
+//   };
+
+//   return (
+//     <Dialog>
+//       <DialogTrigger asChild>
+//         <Button>Request Fuel</Button>
+//       </DialogTrigger>
+//       <DialogContent className="max-w-xl">
+//         <h2 className="text-xl font-bold mb-4">Fuel Request</h2>
+//         <Input name="name" placeholder="Full Name" onChange={handleChange} />
+//         <Input name="phone" placeholder="Phone Number" onChange={handleChange} />
+//         <Input name="imatricule" placeholder="Vehicle Plate" onChange={handleChange} />
+//         <Input name="fuelType" placeholder="Fuel Type (Electric/Diesel/Petrol)" onChange={handleChange} />
+//         <Input name="quantity" type="number" placeholder="Quantity (liters)" onChange={handleChange} />
+//         <Textarea name="note" placeholder="Additional Note" onChange={handleChange} />
+//         <MapContainer center={location} zoom={13} style={{ height: "200px" }}>
+//           <TileLayer
+//             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//           />
+//           <Marker position={location} />
+//           <LocationPicker setLatLng={setLocation} />
+//         </MapContainer>
+//         <Button onClick={handleSubmit} className="mt-4 w-full">
+//           Submit Request
+//         </Button>
+//       </DialogContent>
+//     </Dialog>
+//   );
+// }
+
+
+
+// import { useContext, useEffect, useState } from "react";
+// import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Button } from "@/components/ui/button";
+// import { toast } from "sonner";
+// import axios from "axios";
+// import { AuthContext } from "../context/AuthContext";
+
+
+// import {
+//   MapContainer,
+//   TileLayer,
+//   Marker,
+//   useMapEvents,
+// } from "react-leaflet";
+// import {
+//   Select,
+//   SelectTrigger,
+//   SelectContent,
+//   SelectItem,
+//   SelectValue,
+// } from "@/components/ui/select";
+
+// function LocationPicker({ setLatLng }: { setLatLng: (pos: { lat: number; lng: number }) => void }) {
+//   useMapEvents({
+//     click(e) {
+//       setLatLng({ lat: e.latlng.lat, lng: e.latlng.lng });
+//     },
+//   });
+  
+//   return null;
+// }
+
+// export default function RequestFuelModal() {
+//   const [form, setForm] = useState({
+//     name: "",
+//     phone: "",
+//     imatricule: "",
+//     fuelType: "Diesel",
+//     quantity: 10,
+//     note: "",
+//     time: new Date().toISOString(),
+//   });
+//   const { userInfo } = useContext(AuthContext)
+//   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+//   const [loadingLocation, setLoadingLocation] = useState(true);
+
+//   // 📍 Auto GPS detection on mount
+//   useEffect(() => {
+//     if ("geolocation" in navigator) {
+//       navigator.geolocation.getCurrentPosition(
+//         (pos) => {
+//           setLocation({
+//             lat: pos.coords.latitude,
+//             lng: pos.coords.longitude,
+//           });
+//           setLoadingLocation(false);
+//         },
+//         () => {
+//           toast.error("Failed to get your location");
+//           setLocation({ lat: 33.5899, lng: -7.6039 }); // fallback to Casablanca
+//           setLoadingLocation(false);
+//         }
+//       );
+//     } else {
+//       toast.error("Geolocation not supported");
+//       setLocation({ lat: 33.5899, lng: -7.6039 });
+//       setLoadingLocation(false);
+//     }
+//   }, []);
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//     setForm({ ...form, [e.target.name]: e.target.value });
+//   };
+
+//   const validateForm = () => {
+//     const { name, phone, imatricule, fuelType, quantity } = form;
+//     if (!name || !phone || !imatricule || !fuelType || !quantity || !location) {
+//       toast.error("Please fill all required fields and select a location.");
+//       return false;
+//     }
+//     return true;
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!validateForm()) return;
+
+//     try {
+//       await axios.post("http://localhost:5000/api/request", {
+//         ...form,
+//         location,
+//       });
+//       toast.success("Fuel request sent!");
+//     } catch (err) {
+//       console.error(err);
+//       toast.error("Failed to send request.");
+//     }
+//   };
+
+//   return (
+//     <Dialog>
+//       <DialogTrigger asChild>
+//         <Button>Request Fuel</Button>
+//       </DialogTrigger>
+//       <DialogContent className="max-w-xl space-y-3">
+//         <h2 className="text-xl font-bold mb-2">Fuel Request</h2>
+
+//         <Input name="name" placeholder="Full Name" onChange={handleChange} />
+//         <Input name="phone" placeholder="Phone Number" onChange={handleChange} />
+//         <Input name="imatricule" placeholder="Vehicle Plate" onChange={handleChange} />
+
+//         {/* Fuel Type dropdown */}
+//         <div className="space-y-1">
+//           <label className="text-sm font-medium">Fuel Type</label>
+//           <Select
+//             value={form.fuelType}
+//             onValueChange={(value) => setForm({ ...form, fuelType: value })}
+//           >
+//             <SelectTrigger>
+//               <SelectValue placeholder="Select Fuel Type" />
+//             </SelectTrigger>
+//             <SelectContent>
+//               <SelectItem value="Diesel">Diesel</SelectItem>
+//               <SelectItem value="Petrol">Petrol</SelectItem>
+//               <SelectItem value="Electric">Electric</SelectItem>
+//             </SelectContent>
+//           </Select>
+//         </div>
+
+//         <Input
+//           name="quantity"
+//           type="number"
+//           placeholder="Quantity (liters)"
+//           onChange={handleChange}
+//         />
+//         <Textarea name="note" placeholder="Additional Note" onChange={handleChange} />
+
+//         {/* Map Section */}
+//         <div className="mt-4">
+//           <p className="text-sm font-semibold">Select or confirm your location:</p>
+//           {!loadingLocation && location && (
+//             <p className="text-xs text-gray-500 mb-1">
+//               Current GPS: {location.lat.toFixed(5)}, {location.lng.toFixed(5)}
+//             </p>
+//           )}
+//           <MapContainer center={location || { lat: 0, lng: 0 }} zoom={13} style={{ height: "200px" }}>
+//             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+//             {location && <Marker position={location} />}
+//             <LocationPicker setLatLng={setLocation} />
+//           </MapContainer>
+//         </div>
+
+//         <Button onClick={handleSubmit} className="mt-4 w-full">
+//           Submit Request
+//         </Button>
+//       </DialogContent>
+//     </Dialog>
+//   );
+// }
+
+
+import { useContext, useEffect, useState } from "react";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { AuthContext } from "../context/AuthContext";
+
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMapEvents,
+} from "react-leaflet";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
 
 function LocationPicker({ setLatLng }: { setLatLng: (pos: { lat: number; lng: number }) => void }) {
   useMapEvents({
@@ -220,6 +470,7 @@ function LocationPicker({ setLatLng }: { setLatLng: (pos: { lat: number; lng: nu
       setLatLng({ lat: e.latlng.lat, lng: e.latlng.lng });
     },
   });
+
   return null;
 }
 
@@ -233,15 +484,61 @@ export default function RequestFuelModal() {
     note: "",
     time: new Date().toISOString(),
   });
-  const [location, setLocation] = useState({ lat: 33.5899, lng: -7.6039 }); // Default Casablanca
+  const { userInfo } = useContext(AuthContext);
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [loadingLocation, setLoadingLocation] = useState(true);
+
+  // 📍 Auto GPS detection on mount
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setLocation({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          });
+          setLoadingLocation(false);
+        },
+        () => {
+          toast.error("Failed to get your location");
+          setLocation({ lat: 33.5899, lng: -7.6039 }); // fallback to Casablanca
+          setLoadingLocation(false);
+        }
+      );
+    } else {
+      toast.error("Geolocation not supported");
+      setLocation({ lat: 33.5899, lng: -7.6039 });
+      setLoadingLocation(false);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    const { name, phone, imatricule, fuelType, quantity } = form;
+    if (!name || !phone || !imatricule || !fuelType || !quantity || !location) {
+      toast.error("Please fill all required fields and select a location.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async () => {
+    if (!validateForm()) return;
+
     try {
-      await axios.post("http://localhost:5000/api/request", { ...form, location });
+      await axios.post("http://localhost:5000/api/request", {
+        ...form,
+        client:userInfo._id,
+        location,
+      },
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
       toast.success("Fuel request sent!");
     } catch (err) {
       console.error(err);
@@ -251,28 +548,64 @@ export default function RequestFuelModal() {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Request Fuel</Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-xl">
-        <h2 className="text-xl font-bold mb-4">Fuel Request</h2>
+    {/* //   <DialogTrigger asChild>
+    //     <Button>Request Fuel</Button>
+    //   </DialogTrigger>
+    //   <DialogContent className="max-w-xl space-y-3 max-h-[90vh] overflow-y-auto"> */}
+    <div className="bg-white max-w-xl space-y-3 mx-auto  p-6">
+
+        <h2 className="text-xl font-bold mb-2">Fuel Request</h2>
+
         <Input name="name" placeholder="Full Name" onChange={handleChange} />
         <Input name="phone" placeholder="Phone Number" onChange={handleChange} />
         <Input name="imatricule" placeholder="Vehicle Plate" onChange={handleChange} />
-        <Input name="fuelType" placeholder="Fuel Type (Electric/Diesel/Petrol)" onChange={handleChange} />
-        <Input name="quantity" type="number" placeholder="Quantity (liters)" onChange={handleChange} />
+
+        {/* Fuel Type dropdown */}
+        <div className="space-y-1">
+          <label className="text-sm font-medium">Fuel Type</label>
+          <Select
+            value={form.fuelType}
+            onValueChange={(value) => setForm({ ...form, fuelType: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Fuel Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Diesel">Diesel</SelectItem>
+              <SelectItem value="Petrol">Petrol</SelectItem>
+              <SelectItem value="Electric">Electric</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <Input
+          name="quantity"
+          type="number"
+          placeholder="Quantity (liters)"
+          onChange={handleChange}
+        />
         <Textarea name="note" placeholder="Additional Note" onChange={handleChange} />
-        <MapContainer center={location} zoom={13} style={{ height: "200px" }}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={location} />
-          <LocationPicker setLatLng={setLocation} />
-        </MapContainer>
+
+        {/* Map Section */}
+        <div className="mt-4">
+          <p className="text-sm font-semibold">Select or confirm your location:</p>
+          {!loadingLocation && location && (
+            <p className="text-xs text-gray-500 mb-1">
+              Current GPS: {location.lat.toFixed(5)}, {location.lng.toFixed(5)}
+            </p>
+          )}
+          <MapContainer center={location || { lat: 0, lng: 0 }} zoom={13} style={{ height: "200px" }}>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {location && <Marker position={location} />}
+            <LocationPicker setLatLng={setLocation} />
+          </MapContainer>
+        </div>
+
         <Button onClick={handleSubmit} className="mt-4 w-full">
           Submit Request
         </Button>
-      </DialogContent>
+      {/* </DialogContent> */}
+              </div>
     </Dialog>
   );
 }

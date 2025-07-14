@@ -478,8 +478,8 @@ import RequestHistory from "../../components/RequestHistory";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
-
+// import { LogOut } from "lucide-react";
+import Taibelrequist from "../../components/Taibelreuist"
 export default function ClientDashboard() {
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -562,12 +562,13 @@ export default function ClientDashboard() {
                   </div>
                 ))}
               </CardContent>
+              <Taibelrequist/>
             </Card>
 
-            <Button variant="destructive" className="flex items-center gap-2" onClick={handleLogout}>
+            {/* <Button variant="destructive" className="flex items-center gap-2" onClick={handleLogout}>
               <LogOut className="w-4 h-4" />
               Logout
-            </Button>
+            </Button> */}
           </>
         )}
 

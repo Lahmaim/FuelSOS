@@ -5,7 +5,7 @@ export const createRequest = async (req, res) => {
   try {
     const request = await Request.create({
       ...req.body,
-      // client: req.user._id,
+      client: req.user._id,
     });
     res.status(201).json(request);
   } catch {
@@ -49,14 +49,37 @@ export const acceptRequest = async (req, res) => {
 };
 
 // 🔄 Provider: Update request status
+// export const updateStatus = async (req, res) => {
+//   const request = await Request.findById(req.params.id);
+
+//   // if (!request || String(request.provider) !== String(req.user._id))
+//   //   return res.status(403).json({ message: "Forbidden" });
+
+//   request.status = req.body.status;
+//   await request.save();
+
+//   res.status(200).json(request);
+// };
+// controllers/requestController.js
 export const updateStatus = async (req, res) => {
-  const request = await Request.findById(req.params.id);
+  try {
+    const request = await Request.findById(req.params.id);
 
-  if (!request || String(request.provider) !== String(req.user._id))
-    return res.status(403).json({ message: "Forbidden" });
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
 
-  request.status = req.body.status;
-  await request.save();
+    // Optional: only allow provider to update it
+    // if (String(request.provider) !== String(req.user._id)) {
+    //   return res.status(403).json({ message: "Forbidden" });
+    // }
 
-  res.status(200).json(request);
+    request.status = req.body.status;
+    await request.save();
+
+    res.status(200).json(request);
+  } catch (err) {
+    console.error("Update status failed:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
